@@ -350,12 +350,8 @@ export const service = {
         url: '/mundo/internacional',
       },
       {
-        title: 'EE.UU. 2020',
-        url: '/mundo/noticias-internacional-53826365',
-      },
-      {
-        title: 'Hay Festival',
-        url: '/mundo/noticias-36795069',
+        title: 'Coronavirus',
+        url: '/mundo/topics/c67q9nnn8z7t',
       },
       {
         title: 'Economía',
@@ -380,6 +376,10 @@ export const service = {
       {
         title: 'Video',
         url: '/mundo/media/video',
+      },
+      {
+        title: 'Hay Festival',
+        url: '/mundo/noticias-36795069',
       },
       {
         title: 'Centroamérica Cuenta',
