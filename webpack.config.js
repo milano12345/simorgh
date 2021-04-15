@@ -84,6 +84,18 @@ module.exports = (shell = {}) => {
             },
           ],
         },
+        {
+          test: /\.worker_blah\.js$/,
+          use: { loader: 'worker-loader' },
+        },
+        {
+          test: /\.(png|jpe?g|gif)$/i,
+          use: [
+            {
+              loader: 'file-loader',
+            },
+          ],
+        },
         IS_PROD
           ? {
               test: /\.(js|jsx|mjs)$/,
