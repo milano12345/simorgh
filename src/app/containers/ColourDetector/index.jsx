@@ -1,83 +1,70 @@
+/* eslint-disable import/first */
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useRef } from 'react';
 import styled from '@emotion/styled';
-import { Headline } from '@bbc/psammead-headings';
-
-import { Helmet } from 'react-helmet';
-
-import { latin } from '@bbc/gel-foundations/scripts';
 
 import * as Vibrant from 'node-vibrant';
 
-import joro from './ocean.png';
+const buildBg = ([r, g, b]) => `rgba(${r}, ${g}, ${b})`;
 
-const buildBg = ([r, g, b]) => {
-  console.log(r, g, b);
+const Img = styled.img`
+  width: 700px;
+  margin-bottom: 1rem;
+`;
 
-  return `rgba(${r}, ${g}, ${b})`;
-};
-
-const LinearGradient = styled.div`
-  width: 300px;
-  height: 300px;
-  background: linear-gradient(#e66465, #9198e5);
+const Swatches = styled.div`
+  width: 700px;
+  display: flex;
+  justify-content: space-between;
 `;
 
 const Swatch = styled.div`
-  width: 100px;
-  height: 100px;
-  background: ${({ color }) => buildBg(color)};
-  margin: 0 1rem 0 0;
   display: inline-block;
 `;
 
-const Fade = styled.div`
-  background: url('${joro}');
-  position: relative;
-  height: 100px;
+const SwatchColor = styled.div`
   width: 100px;
-  background-size: cover;
+  height: 100px;
+  background: ${({ color }) => buildBg(color)};
 `;
 
-const Overlay = styled.div`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  xbackground: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+const SwatchLabel = styled.div`
+  text-align: center;
+  font-family: sans-serif;
+  font-weight: bold;
+  margin-top: 0.5rem;
 `;
 
-const Detector = ({ children }) => {
-  const [joroPalette, setJoroPalette] = useState(null);
+import ocean from './ocean.png';
+import frogs from './frogs.png';
+
+const image = ocean;
+
+const Detector = () => {
+  const [palette, setPalette] = useState(null);
 
   const vibrantWorker = useRef(null);
 
   useEffect(() => {
     if (vibrantWorker.current) return;
-    vibrantWorker.current = Vibrant.from(joro).getPalette((err, palette) => {
-      setJoroPalette(palette);
+    vibrantWorker.current = Vibrant.from(image).getPalette((err, colours) => {
+      setPalette(colours);
     });
   });
 
-  console.log(
-    'joro',
-    joroPalette,
-    'statue',
-    // statuePalette
-  );
-
-  // /*{Object.values(joroPalette).map(([key, value], index))}*/
-
   return (
     <div>
-      <div>
-        {Object.entries(joroPalette || {}).map(([key, value], index) => {
-          return <Swatch color={value.rgb}>{key}</Swatch>;
+      <Img src={image} />
+      <Swatches>
+        {Object.entries(palette || {}).map(([key, value]) => {
+          return (
+            <Swatch>
+              <SwatchColor color={value.rgb} />
+              <SwatchLabel>{key}</SwatchLabel>
+            </Swatch>
+          );
         })}
-      </div>
-      <Fade>
-        <Overlay />
-      </Fade>
+      </Swatches>
     </div>
   );
 };
