@@ -52,6 +52,8 @@ const Detector = () => {
     });
   });
 
+  const keyToName = {};
+
   return (
     <div>
       <Img src={image} />
@@ -60,7 +62,7 @@ const Detector = () => {
           return (
             <Swatch>
               <SwatchColor color={value.rgb} />
-              <SwatchLabel>{key}</SwatchLabel>
+              <SwatchLabel>{keyToName[key] || key}</SwatchLabel>
             </Swatch>
           );
         })}

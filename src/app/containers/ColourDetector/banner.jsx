@@ -18,7 +18,7 @@ import { latin } from '@bbc/gel-foundations/scripts';
 
 import ocean from './ocean.png';
 import human from './human.png';
-import ren from './ren.jpg';
+import art from './ren.jpg';
 import bee from './bee.png';
 import bear from './bear.jpg';
 import frogs from './frogs.png';
@@ -26,12 +26,12 @@ import sqr from './sqr.png';
 
 const availableImages = {
   ocean,
-  human,
-  ren,
-  bee,
+  nsfw: human,
   bear,
   frogs,
   sqr,
+  bee,
+  art,
 };
 
 const contrastWeights = {
@@ -70,6 +70,19 @@ const buildGradiant = (colour, contrastModifier) => {
       )`;
 };
 
+const buildVerticalGradiant = (colour, contrastModifier) => {
+  if (!colour) return;
+  const brightness = (1 - contrastModifier) * contrastWeights.background;
+  const rgb = colour._rgb.map(col => col * brightness).join(', ');
+
+  const offset = contrastModifier * contrastWeights.gradientPositions;
+  return `linear-gradient(
+          to bottom,
+          rgba(${rgb}, 0) ${30 - offset}%,
+          rgba(${rgb}, 1) ${50 - offset}%
+        )`;
+};
+
 const Heading = styled(Headline)`
   ${({ service }) => service && getSerifRegular(service)}
   font-size: 28px !important;
@@ -82,7 +95,12 @@ const Container = styled.div`
 `;
 
 const Overlay = styled.div`
-  background: ${({ background }) => background};
+  background: ${({ background, contrastModifier }) =>
+    buildGradiant(background, contrastModifier)};
+  @media (max-width: 700px) {
+    background: ${({ background, contrastModifier }) =>
+      buildVerticalGradiant(background, contrastModifier)};
+  }
 `;
 
 const Typography = styled.div`
@@ -100,8 +118,13 @@ const Banner = styled.div`
   background: url('${({ background }) => background}');
   background-position: right center;
   background-size: cover;
-  width: 1320px;
+  max-width: 1320px;
   margin: 0 auto;
+  background-repeat: no-repeat;
+  @media (max-width: 700px) {
+    background-size: contain;
+    background-position: top center;
+  }
   &:hover {
     cursor: pointer;
     [class*='Headline'] {
@@ -117,6 +140,9 @@ const Chip = styled.div`
   display: inline-block;
   padding: 0.1rem 0.5rem;
   margin-top: 2rem;
+  @media (max-width: 700px) {
+    margin-top: 15rem !important;
+  }
 `;
 
 const Date = styled(Body)`
@@ -133,6 +159,11 @@ const Controls = styled.div`
   bottom: 0;
   right: 0;
   z-index: 1000;
+  background: white;
+  padding: 2px;
+  * {
+    font-family: sans-serif;
+  }
 `;
 
 const Detector = ({ showControls }) => {
@@ -163,7 +194,8 @@ const Detector = ({ showControls }) => {
       >
         <Banner background={image}>
           <Overlay
-            background={buildGradiant(backgroundColour, contrastModifier)}
+            background={backgroundColour}
+            contrastModifier={contrastModifier}
           >
             <Typography>
               <Chip
@@ -211,6 +243,7 @@ const Detector = ({ showControls }) => {
             type="text"
             value={image}
             onChange={e => setImage(e.target.value)}
+            style={{ backgroundColor: 'white' }}
           />
           <button onClick={() => setContrastModifier(contrastModifier - 0.1)}>
             -
