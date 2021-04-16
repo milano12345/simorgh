@@ -38,7 +38,7 @@ const SwatchLabel = styled.div`
 import ocean from './ocean.png';
 import frogs from './frogs.png';
 
-const image = ocean;
+const image = frogs;
 
 const Detector = () => {
   const [palette, setPalette] = useState(null);
