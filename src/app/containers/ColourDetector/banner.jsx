@@ -169,18 +169,20 @@ const Controls = styled.div`
 const Detector = ({ showControls }) => {
   const [backgroundColour, setBackgroundColour] = useState(null);
   const [accentColour, setAccentColour] = useState(null);
-  const [image, setImage] = useState(availableImages.bear);
+  const [image, setImage] = useState(null);
   const [contrastModifier, setContrastModifier] = useState(0.1);
 
-  const imageRef = useRef(null);
+  const imageRef = useRef('temp');
 
   useEffect(() => {
     if (imageRef.current === image) return;
     imageRef.current = image;
-    Vibrant.from(image).getPalette((err, palette) => {
+    const imageToUse = image || availableImages.bear;
+    Vibrant.from(imageToUse).getPalette((err, palette) => {
       setBackgroundColour(chooseColour(palette));
       setAccentColour(chooseAccentColour(palette));
     });
+    if (!image) setImage(availableImages.bear);
   });
 
   return (

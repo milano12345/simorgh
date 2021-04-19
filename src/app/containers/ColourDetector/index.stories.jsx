@@ -11,7 +11,7 @@ storiesOf('Components/Detector', module).add('default', () => {
 });
 
 storiesOf('Components/Banner', module).add('default', () => {
-  return <Banner>hey</Banner>;
+  return <Banner showControls>hey</Banner>;
 });
 
 storiesOf('Components/BannerSmall', module).add('default', () => {
