@@ -24,6 +24,7 @@ export const getProviderFromSource = source => {
 export const getIdFromSource = source => {
   const NO_ID = '';
   const provider = getProviderFromSource(source);
+  debugger;
   if (provider === PROVIDERS.TWITTER) {
     const match = source.match(/\/status\/([0-9]+)/);
     return match ? match[1] : NO_ID;

@@ -29,10 +29,11 @@ const SocialEmbedContainer = ({ blocks, source }) => {
   const provider = getProviderFromSource(source);
   const id = getIdFromSource(source);
 
-  const { model } = blocks[0];
+  const { model, indexOfType } = blocks[0];
+  const index = indexOfType + 1;
   const oEmbed = path(['blocks', 0, 'model', 'oembed'], model);
 
-  const index = id;
+  debugger;
 
   const {
     fallback: fallbackTranslations,

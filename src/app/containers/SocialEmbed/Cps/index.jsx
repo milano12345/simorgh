@@ -28,6 +28,7 @@ const CpsSocialEmbedContainer = ({ blocks }) => {
   const index = indexOfType + 1;
 
   const id = path(['id'], model);
+  debugger;
   const href = path(['href'], model);
   if (!href) return null;
 
