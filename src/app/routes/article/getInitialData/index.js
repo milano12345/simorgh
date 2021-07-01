@@ -13,15 +13,6 @@ const transformJson = pipe(
   addIdsToBlocks,
   applyBlockPositioning,
   addIndexToSocialEmbed,
-
-  // I think maybe a function here to add the index to the social embeds
-  json => {
-    console.log(json, 'hello this is the string');
-    console.log('blocks', json.content.model.blocks); // add the index somewhere in here
-    // name the index property "indexOfType"
-
-    return json;
-  },
 );
 
 export default async ({ path, pageType }) => {
