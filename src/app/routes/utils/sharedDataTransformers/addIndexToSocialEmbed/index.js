@@ -9,8 +9,8 @@ const matchesProviderName = providerName => block =>
 
 const addIndexToSocialEmbed = jsonRaw => {
   // WHAT WE WANT:
-  // We want to replace the JSON value associated with the ID key
-  // We want to replace this ID value with an integer that increases for every twitter embed in the block
+  // We want to add a JSON value associated with the ID key
+  // We want to add ID value with an integer that increases for every twitter embed in the block
   // We want to Map over each object in the block for the change
 
   // HOW WE DO IT:
@@ -23,7 +23,7 @@ const addIndexToSocialEmbed = jsonRaw => {
   const blocks = path(['content', 'model', 'blocks'], jsonRaw);
   const allSocialEmbedBlocks = blocks.filter(isSocialEmbed);
 
-  const somVarName = allSocialEmbedBlocks.map(block => {
+  const insertEmbedIndex = allSocialEmbedBlocks.map(block => {
     const embedBlock = path(
       ['model', 'blocks', 0, 'model', 'blocks', 'oembed'],
       block,
@@ -50,8 +50,8 @@ const addIndexToSocialEmbed = jsonRaw => {
     });
   });
 
-  console.log('xxxxx', JSON.stringify(jsonRaw));
-
+  console.log('xxxxx', jsonRaw);
+  insertEmbedIndex();
   return jsonRaw;
 };
 
